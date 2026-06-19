@@ -826,7 +826,16 @@
       document.getElementById('nationality').addEventListener('change', event => {
         document.getElementById('foreigner-wrap').hidden = !event.target.value || event.target.value === 'Chile';
       });
-      document.getElementById('welcome-form').addEventListener('submit', event => { event.preventDefault(); go('login'); });
+      document.getElementById('welcome-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const nationality = document.getElementById('nationality').value;
+        const isResident = document.getElementById('foreigner').checked;
+        if (nationality && nationality !== 'Chile' && !isResident) {
+          go('home');
+        } else {
+          go('login');
+        }
+      });
       const defaultLanguage = languageSelect.value || 'es';
       applyTranslations(defaultLanguage);
       go('welcome');
