@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b4f8a">
+  <title>Control Fronterizo Digital | Mockup</title>
+  <style>
+    :root {
+      --blue: #075b9e;
+      --blue-dark: #063d6d;
+      --blue-soft: #eaf4fb;
+      --red: #e52d3d;
+      --ink: #172433;
+      --muted: #647386;
+      --line: #dbe3eb;
+      --surface: #ffffff;
+      --bg: #eef3f7;
+      --success: #168557;
+      --shadow: 0 22px 70px rgba(18, 43, 67, .18);
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 8% 15%, rgba(22, 119, 177, .13), transparent 28rem),
+        radial-gradient(circle at 92% 90%, rgba(229, 45, 61, .08), transparent 24rem),
+        var(--bg);
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(280px, 390px) minmax(330px, 430px);
+      align-items: center;
+      justify-content: center;
+      gap: clamp(40px, 8vw, 110px);
+      padding: 40px 24px;
+    }
+
+    .intro { max-width: 390px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      color: var(--blue-dark);
+      background: rgba(255,255,255,.7);
+      border: 1px solid rgba(7,91,158,.14);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--red); }
+    .intro h1 { margin: 22px 0 14px; font-size: clamp(38px, 5vw, 58px); line-height: .98; letter-spacing: -.045em; }
+    .intro p { margin: 0; color: var(--muted); font-size: 17px; line-height: 1.65; }
+    .feature-list { display: grid; gap: 13px; margin-top: 30px; }
+    .feature { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 700; }
+    .feature i { width: 28px; height: 28px; display: grid; place-items: center; color: var(--blue); background: white; border-radius: 9px; box-shadow: 0 5px 16px rgba(20,50,80,.08); font-style: normal; }
+    .prototype-note { margin-top: 30px; padding-top: 18px; border-top: 1px solid rgba(23,36,51,.12); color: var(--muted); font-size: 12px; }
+
+    .device {
+      position: relative;
+      width: min(100%, 410px);
+      height: min(850px, calc(100vh - 36px));
+      min-height: 650px;
+      justify-self: center;
+      overflow: hidden;
+      background: #f8fafc;
+      border: 9px solid #172330;
+      border-radius: 46px;
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,.4);
+    }
+    .device::before {
+      content: "";
+      position: absolute;
+      z-index: 20;
+      top: 10px;
+      left: 50%;
+      width: 92px;
+      height: 25px;
+      transform: translateX(-50%);
+      background: #172330;
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    .app { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+    .statusbar {
+      position: relative;
+      z-index: 5;
+      height: 46px;
+      flex: 0 0 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 22px 0;
+      color: #f8fafc;
+      background: #172330;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .signal { letter-spacing: 1px; }
+
+    .topbar {
+      position: relative;
+      z-index: 12;
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 17px;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+    }
+    .gov-mark { display: flex; align-items: stretch; width: 92px; height: 36px; overflow: hidden; border-radius: 3px; color: white; box-shadow: 0 2px 7px rgba(0,0,0,.09); }
+    .gov-mark .crest { width: 34px; display: grid; place-items: center; background: var(--blue); font-size: 17px; }
+    .gov-mark .ministry { flex: 1; display: flex; align-items: center; padding: 5px; background: var(--red); font-size: 6px; line-height: 1.25; font-weight: 700; }
+    .top-title { min-width: 0; flex: 1; }
+    .top-title strong { display: block; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .top-title span { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; }
+    .icon-button {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 12px;
+      color: var(--blue-dark);
+      background: var(--blue-soft);
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .icon-button:focus-visible, .btn:focus-visible, .quick-card:focus-visible, .nav-link:focus-visible { outline: 3px solid rgba(7,91,158,.27); outline-offset: 2px; }
+
+    .progress { height: 3px; flex: 0 0 3px; background: #edf1f5; }
+    .progress span { display: block; width: 18%; height: 100%; background: var(--red); transition: width .35s ease; }
+
+    main { position: relative; flex: 1; overflow: hidden; }
+    .screens { height: 100%; }
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: none;
+      overflow-y: auto;
+      padding: 25px 20px 32px;
+      background: #f8fafc;
+      scrollbar-width: thin;
+    }
+    .screen.active { display: block; animation: screenIn .3s ease both; }
+    @keyframes screenIn { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+
+    .welcome { text-align: center; }
+    .customs-logo { width: 91px; height: 105px; margin: 4px auto 12px; position: relative; display: grid; place-items: center; color: white; background: linear-gradient(145deg, #073674, #0e5aa0); clip-path: polygon(9% 0,91% 0,100% 76%,50% 100%,0 76%); filter: drop-shadow(0 5px 7px rgba(5,50,99,.2)); }
+    .customs-logo::before { content: "★"; width: 49px; height: 49px; display: grid; place-items: center; border: 4px solid white; border-radius: 50%; font-size: 29px; }
+    .customs-logo::after { content: "ADUANAS  CHILE"; position: absolute; inset: 6px 0 auto; font-size: 7px; line-height: 12px; font-weight: 900; letter-spacing: .09em; }
+    h2 { margin: 0; font-size: 27px; letter-spacing: -.025em; }
+    .lead { margin: 8px 0 24px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+    .field { margin-bottom: 15px; text-align: left; }
+    .field label, .field legend { display: block; margin: 0 0 7px; color: #3c4b5d; font-size: 11px; font-weight: 800; letter-spacing: .035em; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      min-height: 47px;
+      padding: 12px 13px;
+      color: var(--ink);
+      background: white;
+      border: 1px solid #cfd9e3;
+      border-radius: 10px;
+      outline: 0;
+      transition: border .2s, box-shadow .2s;
+    }
+    .field textarea { min-height: 78px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(7,91,158,.1); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    .input-wrap { position: relative; }
+    .input-wrap input { padding-right: 48px; }
+    .peek { position: absolute; top: 50%; right: 7px; transform: translateY(-50%); width: 34px; height: 34px; border: 0; border-radius: 8px; color: var(--muted); background: transparent; }
+    .checkline { display: flex; align-items: flex-start; gap: 9px; margin: 4px 0 18px; text-align: left; color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .checkline input { width: 17px; height: 17px; flex: 0 0 auto; accent-color: var(--blue); }
+
+    .btn { width: 100%; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 18px; border: 0; border-radius: 10px; color: white; background: var(--blue); font-weight: 800; box-shadow: 0 7px 17px rgba(7,91,158,.18); transition: transform .15s, background .15s, opacity .15s; }
+    .btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn:disabled { cursor: not-allowed; opacity: .42; box-shadow: none; transform: none; }
+    .btn.red { background: var(--red); box-shadow: 0 7px 17px rgba(229,45,61,.16); }
+    .btn.red:hover { background: #c81f31; }
+    .btn.secondary { color: var(--blue); background: var(--blue-soft); box-shadow: none; }
+    .btn.ghost { min-height: 40px; color: var(--blue); background: transparent; box-shadow: none; font-size: 12px; }
+    .btn + .btn { margin-top: 10px; }
+
+    .hint { display: flex; gap: 9px; margin: 15px 0; padding: 12px; color: #466174; background: var(--blue-soft); border-radius: 10px; font-size: 11px; line-height: 1.4; text-align: left; }
+    .hint b { color: var(--blue); }
+    .section-head { margin-bottom: 21px; }
+    .section-head .kicker { margin-bottom: 6px; color: var(--red); font-size: 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .section-head h2 { font-size: 24px; }
+    .section-head p { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    .home-hero { margin: -25px -20px 24px; padding: 27px 20px 24px; color: white; background: linear-gradient(135deg, #064a82, #0874bd); }
+    .home-hero small { opacity: .75; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; }
+    .home-hero h2 { margin-top: 6px; font-size: 25px; }
+    .home-hero p { margin: 8px 0 0; opacity: .8; font-size: 12px; }
+    .quick-grid { display: grid; gap: 13px; }
+    .quick-card { width: 100%; display: grid; grid-template-columns: 50px 1fr 24px; align-items: center; gap: 12px; padding: 16px; text-align: left; color: var(--ink); background: white; border: 1px solid var(--line); border-radius: 15px; box-shadow: 0 7px 22px rgba(23,36,51,.05); }
+    .quick-card:hover { border-color: #9bc3df; transform: translateY(-1px); }
+    .quick-card .qicon { width: 50px; height: 50px; display: grid; place-items: center; color: white; background: var(--blue); border-radius: 13px; font-size: 22px; }
+    .quick-card.redcard .qicon { background: var(--red); }
+    .quick-card strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    .quick-card small { display: block; color: var(--muted); font-size: 10px; line-height: 1.35; }
+    .arrow { color: #8fa0b0; font-size: 20px; }
+    .home-subtitle { margin: 0 0 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+    .security-note { margin-top: 19px; padding: 14px; color: var(--muted); background: #f0f3f6; border-radius: 12px; font-size: 10px; line-height: 1.5; }
+
+    .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .choice input { position: absolute; opacity: 0; pointer-events: none; }
+    .choice span { min-height: 45px; display: grid; place-items: center; padding: 8px; color: var(--muted); background: white; border: 1px solid var(--line); border-radius: 9px; font-size: 12px; font-weight: 700; }
+    .choice input:checked + span { color: var(--blue); border-color: var(--blue); background: var(--blue-soft); box-shadow: inset 0 0 0 1px var(--blue); }
+
+    .stepper { display: flex; align-items: center; gap: 7px; margin-bottom: 18px; }
+    .stepper span { height: 5px; flex: 1; border-radius: 5px; background: #dfe6ed; }
+    .stepper span.on { background: var(--red); }
+
+    .qr-view { text-align: center; }
+    .success-ring { width: 50px; height: 50px; display: grid; place-items: center; margin: 0 auto 13px; color: white; background: var(--success); border: 7px solid #dff4eb; border-radius: 50%; font-size: 20px; font-weight: 900; }
+    .qr-card { margin: 19px 0; padding: 18px; background: white; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 12px 30px rgba(23,36,51,.07); }
+    .qr-card img { display: block; width: min(100%, 245px); height: auto; margin: auto; image-rendering: auto; }
+    .qr-code { margin-top: 12px; color: var(--blue-dark); font-size: 11px; font-weight: 900; letter-spacing: .12em; }
+    .qr-view .lead { margin-bottom: 14px; }
+
+    .agent-badge { display: inline-flex; gap: 6px; align-items: center; margin-bottom: 18px; padding: 7px 10px; color: var(--blue-dark); background: var(--blue-soft); border-radius: 999px; font-size: 10px; font-weight: 900; }
+    .scan-zone { margin: 15px 0; padding: 18px; text-align: center; color: white; background: #101a24; border-radius: 18px; }
+    .scan-frame { position: relative; width: 210px; height: 210px; margin: auto; overflow: hidden; border: 2px solid rgba(255,255,255,.35); border-radius: 14px; background: linear-gradient(45deg,#182735,#0c131a); }
+    .scan-frame::before, .scan-frame::after { content: ""; position: absolute; inset: 15px; border: solid #36c3ff; border-width: 3px 0 0 3px; }
+    .scan-frame::after { transform: rotate(180deg); }
+    .scan-line { position: absolute; z-index: 2; left: 14px; right: 14px; top: 20px; height: 2px; background: #ef4050; box-shadow: 0 0 12px #ef4050; animation: scanning 2s ease-in-out infinite alternate; }
+    @keyframes scanning { to { transform: translateY(166px); } }
+    .scan-zone p { margin: 13px 0 0; color: #c9d4de; font-size: 11px; }
+    .validation { display: none; padding: 16px; color: #0e6844; background: #e7f7f0; border: 1px solid #a8dfc8; border-radius: 13px; text-align: left; font-size: 11px; line-height: 1.55; }
+    .validation.show { display: block; animation: screenIn .3s ease; }
+    .validation strong { display: block; margin-bottom: 4px; font-size: 14px; }
+
+    .drawer, .modal {
+      position: absolute;
+      z-index: 30;
+      inset: 0;
+      display: none;
+      background: rgba(9,22,35,.52);
+      backdrop-filter: blur(3px);
+    }
+    .drawer.open, .modal.open { display: block; }
+    .drawer-panel { height: 100%; width: 78%; margin-left: auto; padding: 65px 18px 22px; background: white; box-shadow: -12px 0 35px rgba(0,0,0,.15); animation: drawerIn .25s ease; }
+    @keyframes drawerIn { from { transform: translateX(100%); } }
+    .drawer-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 17px; border-bottom: 1px solid var(--line); }
+    .drawer-head strong { font-size: 16px; }
+    .nav-link { width: 100%; display: flex; align-items: center; gap: 10px; padding: 13px 8px; color: var(--ink); background: none; border: 0; border-bottom: 1px solid #edf1f4; text-align: left; font-size: 12px; font-weight: 700; }
+    .nav-link span { width: 25px; color: var(--blue); text-align: center; }
+    .modal { padding: 80px 20px 20px; }
+    .modal-card { margin-top: 20%; padding: 23px; background: white; border-radius: 18px; box-shadow: var(--shadow); animation: screenIn .25s ease; }
+    .modal-card h3 { margin: 0 0 8px; }
+    .modal-card p { margin: 0 0 18px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+    .toast { position: absolute; z-index: 60; left: 18px; right: 18px; bottom: 20px; display: flex; align-items: center; gap: 10px; padding: 13px 15px; color: white; background: #172433; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.22); transform: translateY(130%); opacity: 0; transition: .25s ease; font-size: 11px; font-weight: 700; }
+    .toast.show { transform: none; opacity: 1; }
+
+    @media (max-width: 820px) {
+      .page { display: block; min-height: 100vh; padding: 0; }
+      .intro { display: none; }
+      .device { width: 100%; height: 100vh; min-height: 600px; border: 0; border-radius: 0; box-shadow: none; }
+      .device::before { display: none; }
+      .statusbar { color: var(--ink); background: white; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside class="intro" aria-label="Descripción del prototipo">
+      <span class="eyebrow">Prototipo interactivo</span>
+      <h1>Tu paso por frontera, más simple.</h1>
+      <p>Un mockup funcional para recorrer el registro vehicular, la declaración SAG y la validación de códigos QR desde una sola experiencia móvil.</p>
+      <div class="feature-list">
+        <div class="feature"><i>✓</i> Flujo completo y navegable</div>
+        <div class="feature"><i>⌁</i> Vista de viajero y agente</div>
+        <div class="feature"><i>▦</i> QR real incluido en el resultado</div>
+      </div>
+      <div class="prototype-note">Esta interfaz es una demostración visual. No representa un servicio oficial ni almacena información.</div>
+    </aside>
+
+    <section class="device" aria-label="Aplicación móvil de control fronterizo">
+      <div class="app">
+        <div class="statusbar"><span id="clock">9:41</span><span class="signal">● ●●  100%</span></div>
+        <header class="topbar">
+          <div class="gov-mark" aria-label="Gobierno de Chile"><div class="crest">♜</div><div class="ministry">Ministerio<br>de Hacienda<br>Gobierno de Chile</div></div>
+          <div class="top-title"><strong id="header-title">Control Fronterizo</strong><span data-i18n="topbarSubtitle">Servicio digital integrado</span></div>
+          <button class="icon-button" id="menu-button" aria-label="Abrir menú" type="button">☰</button>
+        </header>
+        <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+        <main>
+          <div class="screens">
+            <section class="screen active welcome" data-screen="welcome">
+              <div class="customs-logo" aria-label="Aduanas Chile"></div>
+              <h2 data-i18n="welcomeTitle">Bienvenido</h2>
+              <p class="lead" data-i18n="welcomeLead">Configura tu experiencia para comenzar.</p>
+              <form id="welcome-form">
+                <div class="field">
+                  <label for="language" data-i18n="languageLabel">Idioma</label>
+                  <select id="language"><option value="es">Español</option><option value="en">English</option><option value="pt">Português</option></select>
+                </div>
+                <div class="field">
+                  <label for="nationality" data-i18n="nationalityLabel">Nacionalidad</label>
+                  <select id="nationality" required>
+                    <option value="">Seleccionar nacionalidad</option>
+                    <option value="Chile">Chile</option><option value="Argentina">Argentina</option><option value="Bolivia">Bolivia</option><option value="Brasil">Brasil</option><option value="Perú">Perú</option><option value="Otra">Otra</option>
+                  </select>
+                </div>
+                <label class="checkline" id="foreigner-wrap" hidden><input type="checkbox" id="foreigner"> <span data-i18n="foreignerLabel">¿Eres extranjero viviendo actualmente en Chile?</span></label>
+                <button class="btn red" type="submit"><span data-i18n="confirmButton">Confirmar</span> <span>→</span></button>
+              </form>
+            </section>
+
+            <section class="screen" data-screen="login">
+              <div class="section-head"><div class="kicker" data-i18n="loginKicker">Acceso de viajero</div><h2 data-i18n="loginTitle">Identifícate</h2><p data-i18n="loginLead">Ingresa con tus datos para mantener tus trámites asociados.</p></div>
+              <form id="traveler-login">
+                <div class="field"><label for="traveler-run" data-i18n="travelerRunLabel">RUN / Pasaporte</label><input id="traveler-run" autocomplete="username" placeholder="12.345.678-9" data-i18n-placeholder="travelerRunPlaceholder"></div>
+                <div class="field"><label for="traveler-pass" data-i18n="travelerPassLabel">Clave única</label><div class="input-wrap"><input id="traveler-pass" type="password" autocomplete="current-password" placeholder="••••••••" data-i18n-placeholder="travelerPassPlaceholder"><button class="peek" type="button" data-peek="traveler-pass" aria-label="Mostrar clave">◉</button></div></div>
+                <button class="btn red" type="submit" data-i18n="travelerLoginButton">Ingresar</button>
+                <button class="btn secondary" type="button" data-go="home" data-i18n="travelerGuestButton">Continuar sin identificarme</button>
+              </form>
+              <div class="hint"><b>i</b><span data-i18n="loginHint">Para este prototipo puedes usar cualquier RUN y clave, o continuar como invitado.</span></div>
+            </section>
+
+            <section class="screen" data-screen="home">
+              <div class="home-hero"><small data-i18n="homeSmall">Sesión de viajero</small><h2 data-i18n="homeGreeting">Hola, <span id="traveler-name">visitante</span></h2><p data-i18n="homeLead">¿Qué trámite deseas realizar hoy?</p></div>
+              <h3 class="home-subtitle" data-i18n="homeSubtitle">Servicios disponibles</h3>
+              <div class="quick-grid">
+                <button class="quick-card" type="button" data-go="vehicle"><span class="qicon">▣</span><span><strong data-i18n="homeVehicleTitle">Registro vehicular</strong><small data-i18n="homeVehicleDesc">Registra el vehículo con el que ingresarás al país.</small></span><span class="arrow">›</span></button>
+                <button class="quick-card redcard" type="button" data-go="sag"><span class="qicon">⌁</span><span><strong data-i18n="homeSagTitle">Declaración SAG</strong><small data-i18n="homeSagDesc">Declara equipaje y productos de origen animal o vegetal.</small></span><span class="arrow">›</span></button>
+              </div>
+              <div class="security-note"><b data-i18n="privacyTitle">Privacidad:</b> <span data-i18n="privacyText">este mockup funciona de forma local. Los datos ingresados no salen de tu navegador.</span></div>
+            </section>
+
+            <section class="screen" data-screen="vehicle">
+              <div class="stepper"><span class="on"></span><span class="on"></span><span></span></div>
+              <div class="section-head"><div class="kicker" data-i18n="vehicleKicker">Registro vehicular</div><h2 data-i18n="vehicleTitle">Datos del vehículo</h2><p data-i18n="vehicleLead">Selecciona si tu vehículo está ya inscrito o si es un registro nuevo.</p></div>
+              <fieldset class="field" style="border:0;padding:0;margin-bottom:20px">
+                <legend data-i18n="vehicleTypeLegend">Tipo de vehículo</legend>
+                <div class="choice-grid">
+                  <label class="choice"><input type="radio" name="vehicle-status" value="new" checked><span data-i18n="vehicleNew">Auto nuevo</span></label>
+                  <label class="choice"><input type="radio" name="vehicle-status" value="registered"><span data-i18n="vehicleRegistered">Auto ya inscrito</span></label>
+                </div>
+              </fieldset>
+
+              <div id="vehicle-new-section">
+                <form id="vehicle-form">
+                  <div class="field"><label for="owner-id" data-i18n="vehicleOwnerRut">RUN del propietario</label><input id="owner-id" required placeholder="12.345.678-9" data-i18n-placeholder="vehicleOwnerRutPlaceholder"></div>
+                  <div class="field"><label for="plate" data-i18n="vehiclePlate">Patente / matrícula</label><input id="plate" required maxlength="10" placeholder="ABCD-12" data-i18n-placeholder="vehiclePlatePlaceholder"></div>
+                  <div class="field"><label for="registered-vin" data-i18n="vehicleVin">N° de Chasis/VIN/Motor</label><input id="registered-vin" required placeholder="Ej: 1HGCM82633A004352" data-i18n-placeholder="vehicleVinPlaceholder"></div>
+                  <p class="hint" style="margin-top:0"><b>i</b><span data-i18n="vehicleNewHint">Ingresa la información básica para registrar un vehículo nuevo.</span></p>
+                  <button class="btn" type="submit" data-i18n="vehicleGenerateButton">Generar QR de registro</button>
+                </form>
+              </div>
+
+              <div id="vehicle-registered-section" hidden>
+                <form id="vehicle-registered-form">
+                  <div class="field"><label for="registered-rut" data-i18n="vehicleRegisteredRut">Ingrese RUT</label><input id="registered-rut" required placeholder="12.345.678-9" data-i18n-placeholder="vehicleRegisteredRutPlaceholder"></div>
+                  <div class="field"><label for="registered-doc" data-i18n="vehicleRegisteredDoc">N° de documento</label><input id="registered-doc" required placeholder="Ingrese número de documento" data-i18n-placeholder="vehicleRegisteredDocPlaceholder"></div>
+                  <p class="hint" style="margin-top:0"><b>i</b><span data-i18n="vehicleRegisteredHint">Accede con RUT y número de documento para el vehículo ya inscrito.</span></p>
+                  <button class="btn" type="submit" data-i18n="vehicleRegisteredButton">Continuar con vehículo inscrito</button>
+                </form>
+              </div>
+            </section>
+
+            <section class="screen" data-screen="sag">
+              <div class="stepper"><span class="on"></span><span class="on"></span><span></span></div>
+              <div class="section-head"><div class="kicker" data-i18n="sagKicker">Declaración SAG</div><h2 data-i18n="sagTitle">Identificación</h2><p data-i18n="sagLead">Completa los datos de la persona responsable de la declaración.</p></div>
+              <form id="sag-form">
+                <div class="field-row"><div class="field"><label for="first-name" data-i18n="sagFirstName">Nombre(s)</label><input id="first-name" required placeholder="Nombre" data-i18n-placeholder="sagFirstNamePlaceholder"></div><div class="field"><label for="last-name" data-i18n="sagLastName">Apellido(s)</label><input id="last-name" required placeholder="Apellido" data-i18n-placeholder="sagLastNamePlaceholder"></div></div>
+                <div class="field"><label for="email" data-i18n="sagEmail">Correo electrónico</label><input id="email" type="email" required placeholder="nombre@correo.cl" data-i18n-placeholder="sagEmailPlaceholder"></div>
+                <div class="field"><label for="gender" data-i18n="sagGender">Género</label><select id="gender" required><option value="" data-i18n="genderSelect">Seleccionar</option><option data-i18n="genderF">Femenino</option><option data-i18n="genderM">Masculino</option><option data-i18n="genderNB">No binario</option><option data-i18n="genderNA">Prefiero no indicar</option></select></div>
+                <fieldset class="field" style="border:0;padding:0"><legend data-i18n="sagMinorsLegend">¿Incluye equipaje de menores de 18 años?</legend><div class="choice-grid"><label class="choice"><input type="radio" name="minors" value="Sí" required><span data-i18n="sagMinorsYes">Sí</span></label><label class="choice"><input type="radio" name="minors" value="No"><span data-i18n="sagMinorsNo">No</span></label></div></fieldset>
+                <div class="field" id="minor-counts" hidden>
+                  <div class="field-row">
+                    <div class="field"><label for="minor-boys" data-i18n="sagMinorBoys">Cantidad de niños</label><input id="minor-boys" type="number" min="0" value="0" placeholder="0" data-i18n-placeholder="sagMinorBoysPlaceholder"></div>
+                    <div class="field"><label for="minor-girls" data-i18n="sagMinorGirls">Cantidad de niñas</label><input id="minor-girls" type="number" min="0" value="0" placeholder="0" data-i18n-placeholder="sagMinorGirlsPlaceholder"></div>
+                  </div>
+                </div>
+                <fieldset class="field" style="border:0;padding:0"><legend data-i18n="sagProductsLegend">¿Transportas alimentos, semillas, plantas o productos animales?</legend><div class="choice-grid"><label class="choice"><input type="radio" name="products" value="Sí" required><span data-i18n="sagProductsYes">Sí, declarar</span></label><label class="choice"><input type="radio" name="products" value="No"><span data-i18n="sagProductsNo">No</span></label></div></fieldset>
+                <div class="field" id="product-details" hidden><label for="products-detail" data-i18n="productDetailsLabel">Describe los productos</label><textarea id="products-detail" placeholder="Tipo de producto y cantidad aproximada" data-i18n-placeholder="productDetailsPlaceholder"></textarea></div>
+                <button class="btn" type="submit" data-i18n="sagGenerateButton">Generar QR de declaración</button>
+              </form>
+            </section>
+
+            <section class="screen qr-view" data-screen="qr">
+              <div class="success-ring">✓</div>
+              <h2 data-i18n="qrCompleteTitle">Trámite completado</h2>
+              <p class="lead" id="qr-description">Presenta este código al personal de control.</p>
+              <div class="qr-card"><img id="final-qr" src="data:image/png;base64,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" alt="Código QR entregado para validación"><div class="qr-code" id="qr-reference">CFD-2026-00001</div></div>
+              <div class="hint"><b>i</b><span>Guarda este código disponible para presentarlo en el punto fronterizo.</span></div>
+              <button class="btn" type="button" data-go="home">Volver al menú</button>
+              <button class="btn ghost" type="button" id="print-qr">Imprimir comprobante</button>
+            </section>
+
+            <section class="screen" data-screen="agent-login">
+              <div class="customs-logo" style="width:78px;height:90px;margin-bottom:16px" aria-label="Aduanas Chile"></div>
+              <div class="section-head" style="text-align:center"><div class="kicker">Portal institucional</div><h2>Acceso de agente</h2><p>Ingresa tus credenciales para validar trámites.</p></div>
+              <form id="agent-login-form">
+                <div class="field"><label for="agent-run">RUN</label><input id="agent-run" required placeholder="12.345.678-9"></div>
+                <div class="field"><label for="agent-pass">Clave</label><div class="input-wrap"><input id="agent-pass" type="password" required placeholder="••••••••"><button class="peek" type="button" data-peek="agent-pass" aria-label="Mostrar clave">◉</button></div></div>
+                <button class="btn" type="submit">Ingresar</button>
+              </form>
+              <div class="hint"><b>i</b><span>Modo demostración: cualquier combinación permite ingresar.</span></div>
+            </section>
+
+            <section class="screen" data-screen="agent-home">
+              <div class="agent-badge">● SESIÓN DE AGENTE</div>
+              <div class="section-head"><h2>Validación fronteriza</h2><p>Escanea el código presentado por el viajero.</p></div>
+              <button class="quick-card" id="open-scanner" type="button"><span class="qicon">▦</span><span><strong>Validar código QR</strong><small>Abrir cámara y consultar vigencia.</small></span><span class="arrow">›</span></button>
+              <div class="security-note">Agente: <b>Demo Aduanas</b><br>Unidad: Control integrado Los Libertadores</div>
+            </section>
+          </div>
+        </main>
+
+        <div class="drawer" id="drawer" aria-hidden="true"><div class="drawer-panel"><div class="drawer-head"><strong data-i18n="menuTitle">Menú</strong><button class="icon-button" id="close-menu" type="button" aria-label="Cerrar menú">×</button></div><nav><button class="nav-link" type="button" data-go="home"><span>⌂</span><span data-i18n="menuHome">Inicio</span></button><button class="nav-link" type="button" data-go="vehicle"><span>▣</span><span data-i18n="menuVehicle">Registro vehicular</span></button><button class="nav-link" type="button" data-go="sag"><span>⌁</span><span data-i18n="menuSag">Declaración SAG</span></button><button class="nav-link" type="button" data-go="agent-login"><span>♙</span><span data-i18n="menuAgentLogin">Acceso de agente</span></button><button class="nav-link" type="button" data-go="welcome"><span>↻</span><span data-i18n="menuRestart">Reiniciar demostración</span></button></nav></div></div>
+
+        <div class="modal" id="scanner-modal" aria-hidden="true"><div class="modal-card"><h3>Escanear código</h3><p>Simulación de cámara para validar el QR de la demostración.</p><div class="scan-zone"><div class="scan-frame"><div class="scan-line"></div></div><p>Centra el código dentro del recuadro</p></div><div class="validation" id="validation-result"><strong>✓ Código válido</strong>Registro encontrado y habilitado para control fronterizo.</div><button class="btn" id="simulate-scan" type="button">Simular lectura</button><button class="btn ghost" id="close-scanner" type="button">Cerrar</button></div></div>
+
+        <div class="toast" id="toast"><span>✓</span><span id="toast-text">Acción completada</span></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (() => {
+      const screens = [...document.querySelectorAll('.screen')];
+      const title = document.getElementById('header-title');
+      const progress = document.getElementById('progress-bar');
+      const drawer = document.getElementById('drawer');
+      const modal = document.getElementById('scanner-modal');
+      const titles = { welcome:'Control Fronterizo', login:'Acceso de viajero', home:'Servicios fronterizos', vehicle:'Registro vehicular', sag:'Declaración SAG', qr:'Comprobante digital', 'agent-login':'Portal de agentes', 'agent-home':'Control de Aduanas' };
+      const steps = { welcome:18, login:34, home:48, vehicle:68, sag:68, qr:100, 'agent-login':40, 'agent-home':60 };
+      const i18n = {
+        es: {
+          languageLabel: 'Idioma',
+          welcomeTitle: 'Bienvenido',
+          welcomeLead: 'Configura tu experiencia para comenzar.',
+          nationalityLabel: 'Nacionalidad',
+          foreignerLabel: '¿Eres extranjero viviendo actualmente en Chile?',
+          confirmButton: 'Confirmar',
+          loginKicker: 'Acceso de viajero',
+          loginTitle: 'Identifícate',
+          loginLead: 'Ingresa con tus datos para mantener tus trámites asociados.',
+          travelerRunLabel: 'RUN / Pasaporte',
+          travelerRunPlaceholder: '12.345.678-9',
+          travelerPassLabel: 'Clave única',
+          travelerPassPlaceholder: '••••••••',
+          travelerLoginButton: 'Ingresar',
+          travelerGuestButton: 'Continuar sin identificarme',
+          homeSmall: 'Sesión de viajero',
+          homeGreeting: 'Hola, <span id="traveler-name">visitante</span>',
+          titleWelcome: 'Control Fronterizo',
+          titleLogin: 'Acceso de viajero',
+          titleHome: 'Servicios fronterizos',
+          titleVehicle: 'Registro vehicular',
+          titleSag: 'Declaración SAG',
+          titleQr: 'Comprobante digital',
+          titleAgentLogin: 'Portal de agentes',
+          titleAgentHome: 'Control de Aduanas',
+          topbarSubtitle: 'Servicio digital integrado',
+          menuTitle: 'Menú',
+          menuHome: 'Inicio',
+          menuVehicle: 'Registro vehicular',
+          menuSag: 'Declaración SAG',
+          menuAgentLogin: 'Acceso de agente',
+          menuRestart: 'Reiniciar demostración',
+          homeLead: '¿Qué trámite deseas realizar hoy?',
+          homeLead: '¿Qué trámite deseas realizar hoy?',
+          homeSubtitle: 'Servicios disponibles',
+          homeVehicleTitle: 'Registro vehicular',
+          homeVehicleDesc: 'Registra el vehículo con el que ingresarás al país.',
+          homeSagTitle: 'Declaración SAG',
+          homeSagDesc: 'Declara equipaje y productos de origen animal o vegetal.',
+          privacyTitle: 'Privacidad:',
+          privacyText: 'este mockup funciona de forma local. Los datos ingresados no salen de tu navegador.',
+          vehicleKicker: 'Registro vehicular',
+          vehicleTitle: 'Datos del vehículo',
+          vehicleLead: 'Selecciona si tu vehículo está ya inscrito o si es un registro nuevo.',
+          vehicleTypeLegend: 'Tipo de vehículo',
+          vehicleNew: 'Auto nuevo',
+          vehicleRegistered: 'Auto ya inscrito',
+          vehicleOwnerRut: 'RUN del propietario',
+          vehicleOwnerRutPlaceholder: '12.345.678-9',
+          vehiclePlate: 'Patente / matrícula',
+          vehiclePlatePlaceholder: 'ABCD-12',
+          vehicleVin: 'N° de Chasis/VIN/Motor',
+          vehicleVinPlaceholder: 'Ej: 1HGCM82633A004352',
+          vehicleNewHint: 'Ingresa la información básica para registrar un vehículo nuevo.',
+          vehicleGenerateButton: 'Generar QR de registro',
+          vehicleRegisteredRut: 'Ingrese RUT',
+          vehicleRegisteredRutPlaceholder: '12.345.678-9',
+          vehicleRegisteredDoc: 'N° de documento',
+          vehicleRegisteredDocPlaceholder: 'Ingrese número de documento',
+          vehicleRegisteredHint: 'Accede con RUT y número de documento para el vehículo ya inscrito.',
+          vehicleRegisteredButton: 'Continuar con vehículo inscrito',
+          sagKicker: 'Declaración SAG',
+          sagTitle: 'Identificación',
+          sagLead: 'Completa los datos de la persona responsable de la declaración.',
+          sagFirstName: 'Nombre(s)',
+          sagFirstNamePlaceholder: 'Nombre',
+          sagLastName: 'Apellido(s)',
+          sagLastNamePlaceholder: 'Apellido',
+          sagEmail: 'Correo electrónico',
+          sagEmailPlaceholder: 'nombre@correo.cl',
+          sagGender: 'Género',
+          genderSelect: 'Seleccionar',
+          genderF: 'Femenino',
+          genderM: 'Masculino',
+          genderNB: 'No binario',
+          genderNA: 'Prefiero no indicar',
+          sagMinorsLegend: '¿Incluye equipaje de menores de 18 años?',
+          sagMinorsYes: 'Sí',
+          sagMinorsNo: 'No',
+          sagMinorBoys: 'Cantidad de niños',
+          sagMinorBoysPlaceholder: '0',
+          sagMinorGirls: 'Cantidad de niñas',
+          sagMinorGirlsPlaceholder: '0',
+          sagProductsLegend: '¿Transportas alimentos, semillas, plantas o productos animales?',
+          sagProductsYes: 'Sí, declarar',
+          sagProductsNo: 'No',
+          productDetailsLabel: 'Describe los productos',
+          productDetailsPlaceholder: 'Tipo de producto y cantidad aproximada',
+          sagGenerateButton: 'Generar QR de declaración',
+          qrDescriptionVehicle: 'Presenta este QR para validar tu registro vehicular.',
+          qrDescriptionSag: 'Presenta este QR para validar tu declaración SAG.',
+          qrCompleteTitle: 'Trámite completado',
+          qrHint: 'Guarda este código disponible para presentarlo en el punto fronterizo.',
+          qrBackButton: 'Volver al menú',
+          qrPrintButton: 'Imprimir comprobante'
+        },
+        en: {
+          languageLabel: 'Language',
+          welcomeTitle: 'Welcome',
+          welcomeLead: 'Set up your experience to get started.',
+          nationalityLabel: 'Nationality',
+          foreignerLabel: 'Are you a foreigner currently living in Chile?',
+          confirmButton: 'Confirm',
+          loginKicker: 'Traveler access',
+          loginTitle: 'Sign in',
+          loginLead: 'Enter your details to keep your procedures linked.',
+          travelerRunLabel: 'RUT / Passport',
+          travelerRunPlaceholder: '12.345.678-9',
+          travelerPassLabel: 'Personal key',
+          travelerPassPlaceholder: '••••••••',
+          travelerLoginButton: 'Sign in',
+          travelerGuestButton: 'Continue as guest',
+          homeSmall: 'Traveler session',
+          homeGreeting: 'Hello, <span id="traveler-name">visitor</span>',
+          titleWelcome: 'Welcome',
+          titleLogin: 'Traveler access',
+          titleHome: 'Border services',
+          titleVehicle: 'Vehicle registration',
+          titleSag: 'SAG declaration',
+          titleQr: 'Digital receipt',
+          titleAgentLogin: 'Agent portal',
+          titleAgentHome: 'Customs control',
+          topbarSubtitle: 'Integrated digital service',
+          menuTitle: 'Menu',
+          menuHome: 'Home',
+          menuVehicle: 'Vehicle registration',
+          menuSag: 'SAG declaration',
+          menuAgentLogin: 'Agent access',
+          menuRestart: 'Restart demo',
+          homeLead: 'Which procedure would you like to do today?',
+          homeLead: 'Which procedure would you like to do today?',
+          homeSubtitle: 'Available services',
+          homeVehicleTitle: 'Vehicle registration',
+          homeVehicleDesc: 'Register the vehicle you will enter the country with.',
+          homeSagTitle: 'SAG declaration',
+          homeSagDesc: 'Declare luggage and animal or plant products.',
+          privacyTitle: 'Privacy:',
+          privacyText: 'this mockup works locally. Entered data does not leave your browser.',
+          vehicleKicker: 'Vehicle registration',
+          vehicleTitle: 'Vehicle details',
+          vehicleLead: 'Choose whether your vehicle is already registered or a new registration.',
+          vehicleTypeLegend: 'Vehicle type',
+          vehicleNew: 'New car',
+          vehicleRegistered: 'Already registered car',
+          vehicleOwnerRut: 'Owner RUT',
+          vehicleOwnerRutPlaceholder: '12.345.678-9',
+          vehiclePlate: 'License plate',
+          vehiclePlatePlaceholder: 'ABCD-12',
+          vehicleVin: 'Chassis/VIN/Engine number',
+          vehicleVinPlaceholder: 'Ex: 1HGCM82633A004352',
+          vehicleNewHint: 'Enter the basic information to register a new vehicle.',
+          vehicleGenerateButton: 'Generate registration QR',
+          vehicleRegisteredRut: 'Enter RUT',
+          vehicleRegisteredRutPlaceholder: '12.345.678-9',
+          vehicleRegisteredDoc: 'Document number',
+          vehicleRegisteredDocPlaceholder: 'Enter document number',
+          vehicleRegisteredHint: 'Access with RUT and document number for an already registered vehicle.',
+          vehicleRegisteredButton: 'Continue with registered vehicle',
+          sagKicker: 'SAG declaration',
+          sagTitle: 'Identification',
+          sagLead: 'Complete the details of the person responsible for the declaration.',
+          sagFirstName: 'First name(s)',
+          sagFirstNamePlaceholder: 'First name',
+          sagLastName: 'Last name(s)',
+          sagLastNamePlaceholder: 'Last name',
+          sagEmail: 'Email',
+          sagEmailPlaceholder: 'name@email.com',
+          sagGender: 'Gender',
+          genderSelect: 'Select',
+          genderF: 'Female',
+          genderM: 'Male',
+          genderNB: 'Non-binary',
+          genderNA: 'Prefer not to say',
+          sagMinorsLegend: 'Does your luggage include minors under 18?',
+          sagMinorsYes: 'Yes',
+          sagMinorsNo: 'No',
+          sagMinorBoys: 'Number of boys',
+          sagMinorBoysPlaceholder: '0',
+          sagMinorGirls: 'Number of girls',
+          sagMinorGirlsPlaceholder: '0',
+          sagProductsLegend: 'Are you carrying food, seeds, plants or animal products?',
+          sagProductsYes: 'Yes, declare',
+          sagProductsNo: 'No',
+          productDetailsLabel: 'Describe the products',
+          productDetailsPlaceholder: 'Type of product and approximate quantity',
+          sagGenerateButton: 'Generate declaration QR',
+          qrDescriptionVehicle: 'Show this QR to validate your vehicle registration.',
+          qrDescriptionSag: 'Show this QR to validate your SAG declaration.',
+          qrCompleteTitle: 'Procedure completed',
+          qrHint: 'Keep this code available to present at the border checkpoint.',
+          qrBackButton: 'Return to menu',
+          qrPrintButton: 'Print receipt'
+        },
+        pt: {
+          languageLabel: 'Idioma',
+          welcomeTitle: 'Bem-vindo',
+          welcomeLead: 'Configure sua experiência para começar.',
+          nationalityLabel: 'Nacionalidade',
+          foreignerLabel: 'Você é estrangeiro morando atualmente no Chile?',
+          confirmButton: 'Confirmar',
+          loginKicker: 'Acesso do viajante',
+          loginTitle: 'Identifique-se',
+          loginLead: 'Insira seus dados para manter seus processos vinculados.',
+          travelerRunLabel: 'RUN / Passaporte',
+          travelerRunPlaceholder: '12.345.678-9',
+          travelerPassLabel: 'Chave única',
+          travelerPassPlaceholder: '••••••••',
+          travelerLoginButton: 'Entrar',
+          travelerGuestButton: 'Continuar como convidado',
+          homeSmall: 'Sessão do viajante',
+          homeGreeting: 'Olá, <span id="traveler-name">visitante</span>',
+          titleWelcome: 'Bem-vindo',
+          titleLogin: 'Acesso do viajante',
+          titleHome: 'Serviços de fronteira',
+          titleVehicle: 'Registro de veículo',
+          titleSag: 'Declaração SAG',
+          titleQr: 'Comprovante digital',
+          titleAgentLogin: 'Portal do agente',
+          titleAgentHome: 'Controle aduaneiro',
+          topbarSubtitle: 'Serviço digital integrado',
+          menuTitle: 'Menu',
+          menuHome: 'Início',
+          menuVehicle: 'Registro de veículo',
+          menuSag: 'Declaração SAG',
+          menuAgentLogin: 'Acesso do agente',
+          menuRestart: 'Reiniciar demonstração',
+          homeLead: 'Qual procedimento você deseja realizar hoje?',
+          homeLead: 'Qual procedimento você deseja realizar hoje?',
+          homeSubtitle: 'Serviços disponíveis',
+          homeVehicleTitle: 'Registro de veículo',
+          homeVehicleDesc: 'Registre o veículo com o qual você entrará no país.',
+          homeSagTitle: 'Declaração SAG',
+          homeSagDesc: 'Declare bagagem e produtos de origem animal ou vegetal.',
+          privacyTitle: 'Privacidade:',
+          privacyText: 'este mockup funciona localmente. Os dados inseridos não saem do seu navegador.',
+          vehicleKicker: 'Registro de veículo',
+          vehicleTitle: 'Dados do veículo',
+          vehicleLead: 'Escolha se seu veículo já está registrado ou se é um registro novo.',
+          vehicleTypeLegend: 'Tipo de veículo',
+          vehicleNew: 'Carro novo',
+          vehicleRegistered: 'Carro já registrado',
+          vehicleOwnerRut: 'RUN do proprietário',
+          vehicleOwnerRutPlaceholder: '12.345.678-9',
+          vehiclePlate: 'Placa',
+          vehiclePlatePlaceholder: 'ABCD-12',
+          vehicleVin: 'N° do chassi/VIN/motor',
+          vehicleVinPlaceholder: 'Ex: 1HGCM82633A004352',
+          vehicleNewHint: 'Insira as informações básicas para registrar um veículo novo.',
+          vehicleGenerateButton: 'Gerar QR de registro',
+          vehicleRegisteredRut: 'Insira RUN',
+          vehicleRegisteredRutPlaceholder: '12.345.678-9',
+          vehicleRegisteredDoc: 'N° do documento',
+          vehicleRegisteredDocPlaceholder: 'Insira o número do documento',
+          vehicleRegisteredHint: 'Acesse com RUN e número do documento para um veículo já registrado.',
+          vehicleRegisteredButton: 'Continuar com veículo registrado',
+          sagKicker: 'Declaração SAG',
+          sagTitle: 'Identificação',
+          sagLead: 'Complete os dados da pessoa responsável pela declaração.',
+          sagFirstName: 'Nome(s)',
+          sagFirstNamePlaceholder: 'Nome',
+          sagLastName: 'Sobrenome(s)',
+          sagLastNamePlaceholder: 'Sobrenome',
+          sagEmail: 'E-mail',
+          sagEmailPlaceholder: 'nome@correo.cl',
+          sagGender: 'Gênero',
+          genderSelect: 'Selecionar',
+          genderF: 'Feminino',
+          genderM: 'Masculino',
+          genderNB: 'Não binário',
+          genderNA: 'Prefiro não informar',
+          sagMinorsLegend: 'Sua bagagem inclui menores de 18 anos?',
+          sagMinorsYes: 'Sim',
+          sagMinorsNo: 'Não',
+          sagMinorBoys: 'Quantidade de meninos',
+          sagMinorBoysPlaceholder: '0',
+          sagMinorGirls: 'Quantidade de meninas',
+          sagMinorGirlsPlaceholder: '0',
+          sagProductsLegend: 'Você transporta alimentos, sementes, plantas ou produtos animais?',
+          sagProductsYes: 'Sim, declarar',
+          sagProductsNo: 'Não',
+          productDetailsLabel: 'Descreva os produtos',
+          productDetailsPlaceholder: 'Tipo de produto e quantidade aproximada',
+          sagGenerateButton: 'Gerar QR de declaração',
+          qrDescriptionVehicle: 'Apresente este QR para validar o registro do seu veículo.',
+          qrDescriptionSag: 'Apresente este QR para validar sua declaração SAG.',
+          qrCompleteTitle: 'Procedimento concluído',
+          qrHint: 'Guarde este código disponível para apresentá-lo no ponto de fronteira.',
+          qrBackButton: 'Voltar ao menu',
+          qrPrintButton: 'Imprimir recibo'
+        }
+      };
+
+      function applyTranslations(lang) {
+        const map = i18n[lang] || i18n.es;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.dataset.i18n;
+          if (map[key]) {
+            el.innerHTML = map[key];
+          }
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+          const key = el.dataset.i18nPlaceholder;
+          if (map[key]) {
+            el.placeholder = map[key];
+          }
+        });
+        if (lastQrKind && document.querySelector('.screen.active')?.dataset.screen === 'qr') {
+          const descriptionKey = lastQrKind === 'vehicle' ? 'qrDescriptionVehicle' : 'qrDescriptionSag';
+          const qrDescription = document.getElementById('qr-description');
+          if (qrDescription && map[descriptionKey]) {
+            qrDescription.textContent = map[descriptionKey];
+          }
+        }
+        document.documentElement.lang = lang;
+      }
+
+      const languageSelect = document.getElementById('language');
+      languageSelect.addEventListener('change', event => {
+        const currentScreen = document.querySelector('.screen.active')?.dataset.screen;
+        applyTranslations(event.target.value);
+        if (currentScreen) go(currentScreen);
+      });
+
+      const screenTitleKeys = {
+        welcome: 'titleWelcome',
+        login: 'titleLogin',
+        home: 'titleHome',
+        vehicle: 'titleVehicle',
+        sag: 'titleSag',
+        qr: 'titleQr',
+        'agent-login': 'titleAgentLogin',
+        'agent-home': 'titleAgentHome'
+      };
+
+      function go(name) {
+        const target = screens.find(screen => screen.dataset.screen === name);
+        if (!target) return;
+        screens.forEach(screen => screen.classList.toggle('active', screen === target));
+        target.scrollTop = 0;
+        const currentLang = languageSelect.value || 'es';
+        const titleKey = screenTitleKeys[name];
+        const translatedTitle = i18n[currentLang]?.[titleKey] || titles[name] || 'Control Fronterizo';
+        title.textContent = translatedTitle;
+        progress.style.width = `${steps[name] || 18}%`;
+        drawer.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+      }
+
+      let lastQrKind = null;
+      const qrHistory = { vehicle: null, sag: null };
+
+      function toast(message) {
+        const el = document.getElementById('toast');
+        document.getElementById('toast-text').textContent = message;
+        el.classList.add('show');
+        clearTimeout(toast.timer);
+        toast.timer = setTimeout(() => el.classList.remove('show'), 2200);
+      }
+
+      document.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => {
+        const screen = button.dataset.go;
+        if (screen === 'vehicle' && qrHistory.vehicle) {
+          showQr('vehicle');
+        } else if (screen === 'sag' && qrHistory.sag) {
+          showQr('sag');
+        } else {
+          go(screen);
+        }
+      }));
+      document.getElementById('menu-button').addEventListener('click', () => { drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false'); });
+      document.getElementById('close-menu').addEventListener('click', () => { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); });
+      drawer.addEventListener('click', event => { if (event.target === drawer) document.getElementById('close-menu').click(); });
+
+      document.getElementById('nationality').addEventListener('change', event => {
+        document.getElementById('foreigner-wrap').hidden = !event.target.value || event.target.value === 'Chile';
+      });
+      document.getElementById('welcome-form').addEventListener('submit', event => { event.preventDefault(); go('login'); });
+      const defaultLanguage = languageSelect.value || 'es';
+      applyTranslations(defaultLanguage);
+      go('welcome');
+      document.getElementById('traveler-login').addEventListener('submit', event => {
+        event.preventDefault();
+        document.getElementById('traveler-name').textContent = document.getElementById('traveler-run').value || 'visitante';
+        toast('Sesión iniciada correctamente');
+        go('home');
+      });
+      document.querySelectorAll('[data-peek]').forEach(button => button.addEventListener('click', () => {
+        const input = document.getElementById(button.dataset.peek);
+        input.type = input.type === 'password' ? 'text' : 'password';
+        button.textContent = input.type === 'password' ? '◉' : '○';
+      }));
+
+      function showQr(kind, forceNew = false) {
+        const vehicle = kind === 'vehicle';
+        const existing = qrHistory[kind];
+        if (!existing || forceNew) {
+          const code = `${vehicle ? 'VEH' : 'SAG'}-2026-${String(Math.floor(Math.random()*90000)+10000)}`;
+          qrHistory[kind] = { kind, reference: code };
+        }
+        lastQrKind = kind;
+        const currentLang = languageSelect.value || 'es';
+        const descriptionKey = vehicle ? 'qrDescriptionVehicle' : 'qrDescriptionSag';
+        document.getElementById('qr-description').textContent = i18n[currentLang]?.[descriptionKey] || (vehicle ? 'Presenta este QR para validar tu registro vehicular.' : 'Presenta este QR para validar tu declaración SAG.');
+        document.getElementById('qr-reference').textContent = qrHistory[kind].reference;
+        go('qr');
+      }
+
+      const vehicleNewSection = document.getElementById('vehicle-new-section');
+      const vehicleRegisteredSection = document.getElementById('vehicle-registered-section');
+      const vehicleStatusRadios = [...document.querySelectorAll('input[name="vehicle-status"]')];
+
+      function updateVehicleSections() {
+        const selected = document.querySelector('input[name="vehicle-status"]:checked')?.value;
+        vehicleNewSection.hidden = selected !== 'new';
+        vehicleRegisteredSection.hidden = selected !== 'registered';
+      }
+
+      vehicleStatusRadios.forEach(radio => radio.addEventListener('change', updateVehicleSections));
+      updateVehicleSections();
+
+      document.getElementById('vehicle-form').addEventListener('submit', event => { event.preventDefault(); showQr('vehicle'); });
+      document.getElementById('vehicle-registered-form').addEventListener('submit', event => { event.preventDefault(); showQr('vehicle'); });
+      document.getElementById('sag-form').addEventListener('submit', event => { event.preventDefault(); showQr('sag'); });
+      document.querySelectorAll('input[name="products"]').forEach(input => input.addEventListener('change', () => {
+        const yes = document.querySelector('input[name="products"]:checked')?.value === 'Sí';
+        document.getElementById('product-details').hidden = !yes;
+        document.getElementById('products-detail').required = yes;
+      }));
+
+      document.querySelectorAll('input[name="minors"]').forEach(input => input.addEventListener('change', () => {
+        const yes = document.querySelector('input[name="minors"]:checked')?.value === 'Sí';
+        document.getElementById('minor-counts').hidden = !yes;
+        document.getElementById('minor-boys').required = yes;
+        document.getElementById('minor-girls').required = yes;
+      }));
+      document.getElementById('print-qr').addEventListener('click', () => window.print());
+
+      document.getElementById('agent-login-form').addEventListener('submit', event => { event.preventDefault(); toast('Acceso de demostración concedido'); go('agent-home'); });
+      document.getElementById('open-scanner').addEventListener('click', () => { modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.getElementById('validation-result').classList.remove('show'); document.getElementById('simulate-scan').hidden = false; });
+      document.getElementById('close-scanner').addEventListener('click', () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); });
+      document.getElementById('simulate-scan').addEventListener('click', event => { event.currentTarget.hidden = true; document.getElementById('validation-result').classList.add('show'); toast('QR validado correctamente'); });
+      modal.addEventListener('click', event => { if (event.target === modal) document.getElementById('close-scanner').click(); });
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') { document.getElementById('close-menu').click(); document.getElementById('close-scanner').click(); } });
+
+      const now = new Date();
+      document.getElementById('clock').textContent = now.toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'});
+    })();
+  </script>
+</body>
+</html>
