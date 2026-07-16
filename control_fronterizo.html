@@ -231,6 +231,8 @@
     .stepper span.on { background: var(--red); }
 
     .qr-view { text-align: center; }
+    .minor-card { margin-bottom: 12px; padding: 12px; background: white; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 6px 16px rgba(23,36,51,.04); }
+    .minor-card .field { margin-bottom: 10px; }
     .success-ring { width: 50px; height: 50px; display: grid; place-items: center; margin: 0 auto 13px; color: white; background: var(--success); border: 7px solid #dff4eb; border-radius: 50%; font-size: 20px; font-weight: 900; }
     .qr-card { margin: 19px 0; padding: 18px; background: white; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 12px 30px rgba(23,36,51,.07); }
     .qr-card img { display: block; width: min(100%, 245px); height: auto; margin: auto; image-rendering: auto; }
@@ -320,7 +322,7 @@
                   <label for="nationality" data-i18n="nationalityLabel">Nacionalidad</label>
                   <select id="nationality" required>
                     <option value="">Seleccionar nacionalidad</option>
-                    <option value="Chile">Chile</option><option value="Argentina">Argentina</option><option value="Bolivia">Bolivia</option><option value="Brasil">Brasil</option><option value="Perú">Perú</option><option value="Otra">Otra</option>
+                    <option value="Chile">Chile</option><option value="Argentina">Argentina</option><option value="Bolivia">Bolivia</option><option value="Brasil">Brasil</option><option value="Perú">Perú</option>
                   </select>
                 </div>
                 <label class="checkline" id="foreigner-wrap" hidden><input type="checkbox" id="foreigner"> <span data-i18n="foreignerLabel">¿Eres extranjero viviendo actualmente en Chile?</span></label>
@@ -345,6 +347,7 @@
               <div class="quick-grid">
                 <button class="quick-card" type="button" data-go="vehicle"><span class="qicon">▣</span><span><strong data-i18n="homeVehicleTitle">Registro vehicular</strong><small data-i18n="homeVehicleDesc">Registra el vehículo con el que ingresarás al país.</small></span><span class="arrow">›</span></button>
                 <button class="quick-card redcard" type="button" data-go="sag"><span class="qicon">⌁</span><span><strong data-i18n="homeSagTitle">Declaración SAG</strong><small data-i18n="homeSagDesc">Declara equipaje y productos de origen animal o vegetal.</small></span><span class="arrow">›</span></button>
+                <button class="quick-card" type="button" data-go="minors"><span class="qicon">👶</span><span><strong data-i18n="homeMinorsTitle">Registro de menores</strong><small data-i18n="homeMinorsDesc">Registra a los menores que viajarán contigo y adjunta permisos de cruce.</small></span><span class="arrow">›</span></button>
               </div>
               <div class="security-note"><b data-i18n="privacyTitle">Privacidad:</b> <span data-i18n="privacyText">este mockup funciona de forma local. Los datos ingresados no salen de tu navegador.</span></div>
             </section>
@@ -396,7 +399,22 @@
                 </div>
                 <fieldset class="field" style="border:0;padding:0"><legend data-i18n="sagProductsLegend">¿Transportas alimentos, semillas, plantas o productos animales?</legend><div class="choice-grid"><label class="choice"><input type="radio" name="products" value="Sí" required><span data-i18n="sagProductsYes">Sí, declarar</span></label><label class="choice"><input type="radio" name="products" value="No"><span data-i18n="sagProductsNo">No</span></label></div></fieldset>
                 <div class="field" id="product-details" hidden><label for="products-detail" data-i18n="productDetailsLabel">Describe los productos</label><textarea id="products-detail" placeholder="Tipo de producto y cantidad aproximada" data-i18n-placeholder="productDetailsPlaceholder"></textarea></div>
+                <label class="checkline" id="sag-truthfulness-wrap">
+                  <input type="checkbox" id="sag-truthfulness" required>
+                  <span data-i18n="sagTruthfulnessLabel">Declaro que esta información es correcta y veraz.</span>
+                </label>
                 <button class="btn" type="submit" data-i18n="sagGenerateButton">Generar QR de declaración</button>
+              </form>
+            </section>
+
+            <section class="screen" data-screen="minors">
+              <div class="stepper"><span class="on"></span><span class="on"></span><span></span></div>
+              <div class="section-head"><div class="kicker" data-i18n="minorsKicker">Registro de menores</div><h2 data-i18n="minorsTitle">Datos de los menores</h2><p data-i18n="minorsLead">Registra a los menores que viajarán contigo y adjunta los permisos de cruce.</p></div>
+              <form id="minors-form">
+                <div class="field"><label for="minor-count" data-i18n="minorsCountLabel">Número de menores</label><input id="minor-count" type="number" min="1" value="1" required data-i18n-placeholder="minorsCountPlaceholder"></div>
+                <div id="minor-fields"></div>
+                <div class="field"><label for="minor-notes" data-i18n="minorsNotesLabel">Observaciones</label><textarea id="minor-notes" placeholder="Información adicional o contacto de acompañante" data-i18n-placeholder="minorsNotesPlaceholder"></textarea></div>
+                <button class="btn" type="submit" data-i18n="minorsGenerateButton">Generar QR de menores</button>
               </form>
             </section>
 
@@ -406,6 +424,7 @@
               <p class="lead" id="qr-description">Presenta este código al personal de control.</p>
               <div class="qr-card"><img id="final-qr" src="data:image/png;base64,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" alt="Código QR entregado para validación"><div class="qr-code" id="qr-reference">CFD-2026-00001</div></div>
               <div class="hint"><b>i</b><span>Guarda este código disponible para presentarlo en el punto fronterizo.</span></div>
+              <button class="btn secondary" type="button" id="edit-qr">Editar información</button>
               <button class="btn" type="button" data-go="home">Volver al menú</button>
               <button class="btn ghost" type="button" id="print-qr">Imprimir comprobante</button>
             </section>
@@ -430,7 +449,7 @@
           </div>
         </main>
 
-        <div class="drawer" id="drawer" aria-hidden="true"><div class="drawer-panel"><div class="drawer-head"><strong data-i18n="menuTitle">Menú</strong><button class="icon-button" id="close-menu" type="button" aria-label="Cerrar menú">×</button></div><nav><button class="nav-link" type="button" data-go="home"><span>⌂</span><span data-i18n="menuHome">Inicio</span></button><button class="nav-link" type="button" data-go="vehicle"><span>▣</span><span data-i18n="menuVehicle">Registro vehicular</span></button><button class="nav-link" type="button" data-go="sag"><span>⌁</span><span data-i18n="menuSag">Declaración SAG</span></button><button class="nav-link" type="button" data-go="agent-login"><span>♙</span><span data-i18n="menuAgentLogin">Acceso de agente</span></button><button class="nav-link" type="button" data-go="welcome"><span>↻</span><span data-i18n="menuRestart">Reiniciar demostración</span></button></nav></div></div>
+        <div class="drawer" id="drawer" aria-hidden="true"><div class="drawer-panel"><div class="drawer-head"><strong data-i18n="menuTitle">Menú</strong><button class="icon-button" id="close-menu" type="button" aria-label="Cerrar menú">×</button></div><nav><button class="nav-link" type="button" data-go="home"><span>⌂</span><span data-i18n="menuHome">Inicio</span></button><button class="nav-link" type="button" data-go="vehicle"><span>▣</span><span data-i18n="menuVehicle">Registro vehicular</span></button><button class="nav-link" type="button" data-go="sag"><span>⌁</span><span data-i18n="menuSag">Declaración SAG</span></button><button class="nav-link" type="button" data-go="minors"><span>👶</span><span data-i18n="menuMinors">Registro de menores</span></button><button class="nav-link" type="button" data-go="agent-login"><span>♙</span><span data-i18n="menuAgentLogin">Acceso de agente</span></button><button class="nav-link" type="button" data-go="welcome"><span>↻</span><span data-i18n="menuRestart">Reiniciar demostración</span></button></nav></div></div>
 
         <div class="modal" id="scanner-modal" aria-hidden="true"><div class="modal-card"><h3>Escanear código</h3><p>Simulación de cámara para validar el QR de la demostración.</p><div class="scan-zone"><div class="scan-frame"><div class="scan-line"></div></div><p>Centra el código dentro del recuadro</p></div><div class="validation" id="validation-result"><strong>✓ Código válido</strong>Registro encontrado y habilitado para control fronterizo.</div><button class="btn" id="simulate-scan" type="button">Simular lectura</button><button class="btn ghost" id="close-scanner" type="button">Cerrar</button></div></div>
 
@@ -446,8 +465,8 @@
       const progress = document.getElementById('progress-bar');
       const drawer = document.getElementById('drawer');
       const modal = document.getElementById('scanner-modal');
-      const titles = { welcome:'Control Fronterizo', login:'Acceso de viajero', home:'Servicios fronterizos', vehicle:'Registro vehicular', sag:'Declaración SAG', qr:'Comprobante digital', 'agent-login':'Portal de agentes', 'agent-home':'Control de Aduanas' };
-      const steps = { welcome:18, login:34, home:48, vehicle:68, sag:68, qr:100, 'agent-login':40, 'agent-home':60 };
+      const titles = { welcome:'Control Fronterizo', login:'Acceso de viajero', home:'Servicios fronterizos', vehicle:'Registro vehicular', sag:'Declaración SAG', minors:'Registro de menores', qr:'Comprobante digital', 'agent-login':'Portal de agentes', 'agent-home':'Control de Aduanas' };
+      const steps = { welcome:18, login:34, home:48, vehicle:68, sag:68, minors:84, qr:100, 'agent-login':40, 'agent-home':60 };
       const i18n = {
         es: {
           languageLabel: 'Idioma',
@@ -472,6 +491,7 @@
           titleHome: 'Servicios fronterizos',
           titleVehicle: 'Registro vehicular',
           titleSag: 'Declaración SAG',
+          titleMinors: 'Registro de menores',
           titleQr: 'Comprobante digital',
           titleAgentLogin: 'Portal de agentes',
           titleAgentHome: 'Control de Aduanas',
@@ -480,6 +500,7 @@
           menuHome: 'Inicio',
           menuVehicle: 'Registro vehicular',
           menuSag: 'Declaración SAG',
+          menuMinors: 'Registro de menores',
           menuAgentLogin: 'Acceso de agente',
           menuRestart: 'Reiniciar demostración',
           homeLead: '¿Qué trámite deseas realizar hoy?',
@@ -489,6 +510,8 @@
           homeVehicleDesc: 'Registra el vehículo con el que ingresarás al país.',
           homeSagTitle: 'Declaración SAG',
           homeSagDesc: 'Declara equipaje y productos de origen animal o vegetal.',
+          homeMinorsTitle: 'Registro de menores',
+          homeMinorsDesc: 'Registra a los menores que viajarán contigo y adjunta permisos de cruce.',
           privacyTitle: 'Privacidad:',
           privacyText: 'este mockup funciona de forma local. Los datos ingresados no salen de tu navegador.',
           vehicleKicker: 'Registro vehicular',
@@ -539,12 +562,29 @@
           productDetailsLabel: 'Describe los productos',
           productDetailsPlaceholder: 'Tipo de producto y cantidad aproximada',
           sagGenerateButton: 'Generar QR de declaración',
+          minorsKicker: 'Registro de menores',
+          minorsTitle: 'Datos de los menores',
+          minorsLead: 'Registra a los menores que viajarán contigo y adjunta los permisos de cruce.',
+          minorsCountLabel: 'Número de menores',
+          minorsCountPlaceholder: '1',
+          minorsNotesLabel: 'Observaciones',
+          minorsNotesPlaceholder: 'Información adicional o contacto de acompañante',
+          minorNameLabel: 'Nombre del menor',
+          minorNamePlaceholder: 'Nombre completo',
+          minorAgeLabel: 'Edad',
+          minorAgePlaceholder: 'Ej: 12',
+          minorPermissionLabel: 'Permiso de cruce',
+          minorPermissionHint: 'Adjunta uno o más archivos PDF, JPG o PNG',
+          minorsGenerateButton: 'Generar QR de menores',
           qrDescriptionVehicle: 'Presenta este QR para validar tu registro vehicular.',
           qrDescriptionSag: 'Presenta este QR para validar tu declaración SAG.',
+          qrDescriptionMinors: 'Presenta este QR para validar el registro de menores.',
           qrCompleteTitle: 'Trámite completado',
           qrHint: 'Guarda este código disponible para presentarlo en el punto fronterizo.',
           qrBackButton: 'Volver al menú',
-          qrPrintButton: 'Imprimir comprobante'
+          qrPrintButton: 'Imprimir comprobante',
+          editQrButton: 'Editar información',
+          sagTruthfulnessLabel: 'Declaro que esta información es correcta y veraz.'
         },
         en: {
           languageLabel: 'Language',
@@ -569,6 +609,7 @@
           titleHome: 'Border services',
           titleVehicle: 'Vehicle registration',
           titleSag: 'SAG declaration',
+          titleMinors: 'Minors registration',
           titleQr: 'Digital receipt',
           titleAgentLogin: 'Agent portal',
           titleAgentHome: 'Customs control',
@@ -577,6 +618,7 @@
           menuHome: 'Home',
           menuVehicle: 'Vehicle registration',
           menuSag: 'SAG declaration',
+          menuMinors: 'Minors registration',
           menuAgentLogin: 'Agent access',
           menuRestart: 'Restart demo',
           homeLead: 'Which procedure would you like to do today?',
@@ -586,6 +628,8 @@
           homeVehicleDesc: 'Register the vehicle you will enter the country with.',
           homeSagTitle: 'SAG declaration',
           homeSagDesc: 'Declare luggage and animal or plant products.',
+          homeMinorsTitle: 'Minors registration',
+          homeMinorsDesc: 'Register the minors traveling with you and attach crossing permits.',
           privacyTitle: 'Privacy:',
           privacyText: 'this mockup works locally. Entered data does not leave your browser.',
           vehicleKicker: 'Vehicle registration',
@@ -636,12 +680,29 @@
           productDetailsLabel: 'Describe the products',
           productDetailsPlaceholder: 'Type of product and approximate quantity',
           sagGenerateButton: 'Generate declaration QR',
+          minorsKicker: 'Minors registration',
+          minorsTitle: 'Minors details',
+          minorsLead: 'Register the minors traveling with you and attach their crossing permits.',
+          minorsCountLabel: 'Number of minors',
+          minorsCountPlaceholder: '1',
+          minorsNotesLabel: 'Notes',
+          minorsNotesPlaceholder: 'Additional information or guardian contact',
+          minorNameLabel: 'Minor full name',
+          minorNamePlaceholder: 'Full name',
+          minorAgeLabel: 'Age',
+          minorAgePlaceholder: 'Ex: 12',
+          minorPermissionLabel: 'Crossing permit',
+          minorPermissionHint: 'Attach one or more PDF, JPG, or PNG files',
+          minorsGenerateButton: 'Generate minors QR',
           qrDescriptionVehicle: 'Show this QR to validate your vehicle registration.',
           qrDescriptionSag: 'Show this QR to validate your SAG declaration.',
+          qrDescriptionMinors: 'Show this QR to validate the minors registration.',
           qrCompleteTitle: 'Procedure completed',
           qrHint: 'Keep this code available to present at the border checkpoint.',
           qrBackButton: 'Return to menu',
-          qrPrintButton: 'Print receipt'
+          qrPrintButton: 'Print receipt',
+          editQrButton: 'Edit information',
+          sagTruthfulnessLabel: 'I declare that this information is correct and truthful.'
         },
         pt: {
           languageLabel: 'Idioma',
@@ -666,6 +727,7 @@
           titleHome: 'Serviços de fronteira',
           titleVehicle: 'Registro de veículo',
           titleSag: 'Declaração SAG',
+          titleMinors: 'Registro de menores',
           titleQr: 'Comprovante digital',
           titleAgentLogin: 'Portal do agente',
           titleAgentHome: 'Controle aduaneiro',
@@ -674,6 +736,7 @@
           menuHome: 'Início',
           menuVehicle: 'Registro de veículo',
           menuSag: 'Declaração SAG',
+          menuMinors: 'Registro de menores',
           menuAgentLogin: 'Acesso do agente',
           menuRestart: 'Reiniciar demonstração',
           homeLead: 'Qual procedimento você deseja realizar hoje?',
@@ -683,6 +746,8 @@
           homeVehicleDesc: 'Registre o veículo com o qual você entrará no país.',
           homeSagTitle: 'Declaração SAG',
           homeSagDesc: 'Declare bagagem e produtos de origem animal ou vegetal.',
+          homeMinorsTitle: 'Registro de menores',
+          homeMinorsDesc: 'Registre os menores que viajarão com você e anexe permissões de travessia.',
           privacyTitle: 'Privacidade:',
           privacyText: 'este mockup funciona localmente. Os dados inseridos não saem do seu navegador.',
           vehicleKicker: 'Registro de veículo',
@@ -733,12 +798,29 @@
           productDetailsLabel: 'Descreva os produtos',
           productDetailsPlaceholder: 'Tipo de produto e quantidade aproximada',
           sagGenerateButton: 'Gerar QR de declaração',
+          minorsKicker: 'Registro de menores',
+          minorsTitle: 'Dados dos menores',
+          minorsLead: 'Registre os menores que viajarão com você e anexe as permissões de travessia.',
+          minorsCountLabel: 'Número de menores',
+          minorsCountPlaceholder: '1',
+          minorsNotesLabel: 'Observações',
+          minorsNotesPlaceholder: 'Informação adicional ou contato do acompanhante',
+          minorNameLabel: 'Nome do menor',
+          minorNamePlaceholder: 'Nome completo',
+          minorAgeLabel: 'Idade',
+          minorAgePlaceholder: 'Ex: 12',
+          minorPermissionLabel: 'Permissão de travessia',
+          minorPermissionHint: 'Anexe um ou mais arquivos PDF, JPG ou PNG',
+          minorsGenerateButton: 'Gerar QR de menores',
           qrDescriptionVehicle: 'Apresente este QR para validar o registro do seu veículo.',
           qrDescriptionSag: 'Apresente este QR para validar sua declaração SAG.',
+          qrDescriptionMinors: 'Apresente este QR para validar o registro de menores.',
           qrCompleteTitle: 'Procedimento concluído',
           qrHint: 'Guarde este código disponível para apresentá-lo no ponto de fronteira.',
           qrBackButton: 'Voltar ao menu',
-          qrPrintButton: 'Imprimir recibo'
+          qrPrintButton: 'Imprimir recibo',
+          editQrButton: 'Editar informações',
+          sagTruthfulnessLabel: 'Declaro que esta informação é correta e verdadeira.'
         }
       };
 
@@ -757,7 +839,7 @@
           }
         });
         if (lastQrKind && document.querySelector('.screen.active')?.dataset.screen === 'qr') {
-          const descriptionKey = lastQrKind === 'vehicle' ? 'qrDescriptionVehicle' : 'qrDescriptionSag';
+          const descriptionKey = lastQrKind === 'vehicle' ? 'qrDescriptionVehicle' : lastQrKind === 'minors' ? 'qrDescriptionMinors' : 'qrDescriptionSag';
           const qrDescription = document.getElementById('qr-description');
           if (qrDescription && map[descriptionKey]) {
             qrDescription.textContent = map[descriptionKey];
@@ -779,6 +861,7 @@
         home: 'titleHome',
         vehicle: 'titleVehicle',
         sag: 'titleSag',
+        minors: 'titleMinors',
         qr: 'titleQr',
         'agent-login': 'titleAgentLogin',
         'agent-home': 'titleAgentHome'
@@ -796,10 +879,13 @@
         progress.style.width = `${steps[name] || 18}%`;
         drawer.classList.remove('open');
         drawer.setAttribute('aria-hidden', 'true');
+        if (name === 'minors') {
+          renderMinorFields();
+        }
       }
 
       let lastQrKind = null;
-      const qrHistory = { vehicle: null, sag: null };
+      const qrHistory = { vehicle: null, sag: null, minors: null };
 
       function toast(message) {
         const el = document.getElementById('toast');
@@ -815,6 +901,8 @@
           showQr('vehicle');
         } else if (screen === 'sag' && qrHistory.sag) {
           showQr('sag');
+        } else if (screen === 'minors' && qrHistory.minors) {
+          showQr('minors');
         } else {
           go(screen);
         }
@@ -829,8 +917,8 @@
       document.getElementById('welcome-form').addEventListener('submit', event => {
         event.preventDefault();
         const nationality = document.getElementById('nationality').value;
-        const isResident = document.getElementById('foreigner').checked;
-        if (nationality && nationality !== 'Chile' && !isResident) {
+
+        if (nationality && nationality !== 'Chile') {
           go('home');
         } else {
           go('login');
@@ -853,15 +941,17 @@
 
       function showQr(kind, forceNew = false) {
         const vehicle = kind === 'vehicle';
+        const minors = kind === 'minors';
         const existing = qrHistory[kind];
         if (!existing || forceNew) {
-          const code = `${vehicle ? 'VEH' : 'SAG'}-2026-${String(Math.floor(Math.random()*90000)+10000)}`;
+          const prefix = vehicle ? 'VEH' : minors ? 'MIN' : 'SAG';
+          const code = `${prefix}-2026-${String(Math.floor(Math.random()*90000)+10000)}`;
           qrHistory[kind] = { kind, reference: code };
         }
         lastQrKind = kind;
         const currentLang = languageSelect.value || 'es';
-        const descriptionKey = vehicle ? 'qrDescriptionVehicle' : 'qrDescriptionSag';
-        document.getElementById('qr-description').textContent = i18n[currentLang]?.[descriptionKey] || (vehicle ? 'Presenta este QR para validar tu registro vehicular.' : 'Presenta este QR para validar tu declaración SAG.');
+        const descriptionKey = vehicle ? 'qrDescriptionVehicle' : minors ? 'qrDescriptionMinors' : 'qrDescriptionSag';
+        document.getElementById('qr-description').textContent = i18n[currentLang]?.[descriptionKey] || (vehicle ? 'Presenta este QR para validar tu registro vehicular.' : minors ? 'Presenta este QR para validar el registro de menores.' : 'Presenta este QR para validar tu declaración SAG.');
         document.getElementById('qr-reference').textContent = qrHistory[kind].reference;
         go('qr');
       }
@@ -881,7 +971,15 @@
 
       document.getElementById('vehicle-form').addEventListener('submit', event => { event.preventDefault(); showQr('vehicle'); });
       document.getElementById('vehicle-registered-form').addEventListener('submit', event => { event.preventDefault(); showQr('vehicle'); });
-      document.getElementById('sag-form').addEventListener('submit', event => { event.preventDefault(); showQr('sag'); });
+      document.getElementById('sag-form').addEventListener('submit', event => {
+        event.preventDefault();
+        const confirmation = document.getElementById('sag-truthfulness');
+        if (!confirmation.checked) {
+          toast('Debes confirmar que la información es correcta y veraz');
+          return;
+        }
+        showQr('sag');
+      });
       document.querySelectorAll('input[name="products"]').forEach(input => input.addEventListener('change', () => {
         const yes = document.querySelector('input[name="products"]:checked')?.value === 'Sí';
         document.getElementById('product-details').hidden = !yes;
@@ -894,6 +992,45 @@
         document.getElementById('minor-boys').required = yes;
         document.getElementById('minor-girls').required = yes;
       }));
+
+      function renderMinorFields() {
+        const container = document.getElementById('minor-fields');
+        const countInput = document.getElementById('minor-count');
+        if (!container || !countInput) return;
+        const count = Math.max(1, parseInt(countInput.value || '1', 10));
+        container.innerHTML = '';
+        const currentLang = languageSelect.value || 'es';
+        for (let index = 0; index < count; index += 1) {
+          const card = document.createElement('div');
+          card.className = 'minor-card';
+          card.innerHTML = `
+            <div class="field">
+              <label for="minor-name-${index}" data-i18n="minorNameLabel"></label>
+              <input id="minor-name-${index}" required data-i18n-placeholder="minorNamePlaceholder">
+            </div>
+            <div class="field">
+              <label for="minor-age-${index}" data-i18n="minorAgeLabel"></label>
+              <input id="minor-age-${index}" type="number" min="1" max="17" required data-i18n-placeholder="minorAgePlaceholder">
+            </div>
+            <div class="field">
+              <label for="minor-file-${index}" data-i18n="minorPermissionLabel"></label>
+              <input id="minor-file-${index}" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple>
+              <small style="display:block;margin-top:6px;color:var(--muted);font-size:10px;" data-i18n="minorPermissionHint"></small>
+            </div>`;
+          container.appendChild(card);
+        }
+        applyTranslations(currentLang);
+      }
+
+      document.getElementById('minor-count').addEventListener('input', renderMinorFields);
+      document.getElementById('minors-form').addEventListener('submit', event => {
+        event.preventDefault();
+        showQr('minors');
+      });
+      document.getElementById('edit-qr').addEventListener('click', () => {
+        const targetScreen = lastQrKind === 'vehicle' ? 'vehicle' : lastQrKind === 'minors' ? 'minors' : 'sag';
+        go(targetScreen);
+      });
       document.getElementById('print-qr').addEventListener('click', () => window.print());
 
       document.getElementById('agent-login-form').addEventListener('submit', event => { event.preventDefault(); toast('Acceso de demostración concedido'); go('agent-home'); });
